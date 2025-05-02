@@ -1,0 +1,40 @@
+#!/bin/bash
+
+<< tash
+deploy Django app 
+and handle the code error
+tash
+
+code_clone() {
+	echo "clonging the django cod app..."
+
+	git clone https://github.com/LondheShubham153/django-notes-app.git
+}
+
+install_requirements() {
+	echo "installlig dependances"
+	sudo yum install docker  nginx -y
+}
+
+required_restarts(){
+	sudo systemctl enable docker
+	sudo systemctl enable naginx
+}
+
+deploy() {
+	docker build -t notes-app .
+	docker run -d -p 8000:8000 notes-app:latest
+}
+
+
+echo  "********deployment started**************"
+
+code_clone
+install_requirements
+required_restarts
+deploy
+
+echo  "********deployment started**************"
+
+
+
